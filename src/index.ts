@@ -2,6 +2,7 @@ import { TodoistApi, Task } from '@doist/todoist-api-typescript';
 
 interface Env {
 	TODOIST_API_TOKEN: string;
+	CRON_SECRET_TOKEN: string;
 }
 
 export default {
@@ -12,6 +13,16 @@ export default {
 		console.log(`Received fetch request for path: ${url.pathname}`); // Added for debugging
 
 		if (url.pathname.startsWith('/--run-cron')) {
+			const authHeader = request.headers.get('Authorization');
+			if (!authHeader || !authHeader.startsWith('Bearer ')) {
+				return new Response('Missing or invalid Authorization header.', { status: 401 });
+			}
+
+			const token = authHeader.substring(7);
+			if (token !== env.CRON_SECRET_TOKEN) {
+				return new Response('Invalid token.', { status: 403 });
+			}
+
 			console.log('Cron job triggered via fetch workaround...');
 			await this.scheduled(null as any, env, ctx);
 			return new Response('Scheduled job executed manually.');
