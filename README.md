@@ -69,12 +69,13 @@ The worker runs on a schedule, checking for recently completed tasks and reopeni
    npm install
    ```
 
-3. **Set Todoist API Token:**
+3. **Set API Tokens:**
 
-   Provide your API token to Cloudflare's secret manager. You will be prompted to paste the token.
+   Provide your Todoist API token and a secret token for the manual trigger to Cloudflare's secret manager. You will be prompted to paste the tokens.
 
    ```bash
    npx wrangler secret put TODOIST_API_TOKEN
+   npx wrangler secret put CRON_SECRET_TOKEN
    ```
 
 ## Commands
@@ -101,6 +102,15 @@ To deploy this worker, you will need a Cloudflare account and the [Wrangler CLI]
    ```bash
    npx wrangler deploy
    ```
+
+## Manual Trigger
+
+To manually trigger the worker, you can send a `GET` request to the `/__run-cron` endpoint. You will need to include the `Authorization` header with your `CRON_SECRET_TOKEN`.
+
+```bash
+curl -X GET https://your-worker-url.workers.dev/--run-cron \
+  -H "Authorization: Bearer YOUR_CRON_SECRET_TOKEN"
+```
 
 ## Contributing
 
