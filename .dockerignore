@@ -1,0 +1,9 @@
+.dev.vars
+.env
+.env.example
+.geminiignore
+Dockerfile
+GEMINI.md
+logs
+node_modules
+npm-debug.log
