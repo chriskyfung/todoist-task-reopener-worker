@@ -1,0 +1,41 @@
+{
+  "name": "todoist-reopener-worker",
+  "version": "1.0.0",
+  "description": "A Cloudflare Worker that automatically reopens completed Todoist tasks.",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "wrangler deploy --dry-run --outdir=dist",
+    "clean": "rm -rf dist node_modules",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "lint": "eslint .",
+    "start": "wrangler dev",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "tail": "wrangler tail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chriskyfung/todoist-reopener-worker"
+  },
+  "keywords": [
+    "todoist",
+    "cloudflare",
+    "worker",
+    "automation"
+  ],
+  "author": "Chris K.Y. Fung",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240430.0",
+    "typescript": "^5.4.5",
+    "vitest": "^3.2.4",
+    "wrangler": "latest",
+    "eslint": "^8.57.0"
+  },
+  "dependencies": {
+    "@doist/todoist-api-typescript": "^5.1.1",
+    "tslib": "^2.8.1"
+  }
+}
