@@ -6,3 +6,6 @@ compatibility_date = "2024-05-01"
 # Cron syntax for: "At 19:00 PM (UTC) on Sunday and Thursday, which is 03:00 AM
 # (Asia/Hong_Kong) on Monday and Friday."
 crons = ["0 19 * * SUN,THU"]
+
+[observability.logs]
+enabled = true
