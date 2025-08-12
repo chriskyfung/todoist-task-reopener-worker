@@ -58,7 +58,7 @@ This project is a serverless Cloudflare Worker that automatically reopens comple
 
 ## Deployment
 
-The `TODOIST_API_TOKEN` is managed as a secret in Cloudflare. To deploy the worker, use the `npx wrangler deploy` command.
+The `TODOIST_API_TOKEN` and `CRON_SECRET_TOKEN` are managed as secrets in Cloudflare. To deploy the worker, use the `npx wrangler deploy` command.
 
 ## Commits
 

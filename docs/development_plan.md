@@ -86,7 +86,7 @@ The first step is to create the necessary files and structure for a Cloudflare W
 
 This is the core logic of the service, written in TypeScript.
 
-1. **Define Environment:** Create a TypeScript interface to define the environment variables (secrets) that will be available to the worker, ensuring type safety.
+1. **Define Environment:** Create a TypeScript interface to define the environment variables (secrets) that will be available to the worker, ensuring type safety. This includes the `TODOIST_API_TOKEN` and the `CRON_SECRET_TOKEN`.
 
 2. **Create the `scheduled` Event Listener:** The worker's execution will be initiated by the cron trigger, which fires a `scheduled` event. All logic will be contained within this event handler.
 
@@ -108,13 +108,14 @@ This phase outlines the final steps to get the worker running live.
 
 1. **Install Dependencies:** Run `npm install` to download the `wrangler` CLI and TypeScript.
 
-2. **Set API Token Secret:** Securely provide your Todoist API token to the worker without hardcoding it. This is done with a single `wrangler` command:
+2. **Set API Token Secrets:** Securely provide your Todoist API token and a secret token for the manual trigger to the worker without hardcoding them. This is done with the following `wrangler` commands:
 
     ```bash
     npx wrangler secret put TODOIST_API_TOKEN
+    npx wrangler secret put CRON_SECRET_TOKEN
     ```
 
-    You will be prompted to paste your token in the terminal.
+    You will be prompted to paste your tokens in the terminal.
 
 3. **Deploy the Worker:** Deploy the script and the cron trigger to the Cloudflare network with a single command:
 
