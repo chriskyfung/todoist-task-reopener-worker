@@ -20,7 +20,7 @@ The first step is to create the necessary files and structure for a Cloudflare W
         "clean": "rm -rf dist node_modules",
         "deploy": "wrangler deploy",
         "dev": "wrangler dev",
-        "lint": "eslint .",
+        "lint": "eslint src/**/*.ts",
         "start": "wrangler dev",
         "test": "vitest",
         "test:coverage": "vitest run --coverage",
@@ -40,10 +40,16 @@ The first step is to create the necessary files and structure for a Cloudflare W
       "license": "MIT",
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20240430.0",
+        "@eslint/js": "^9.33.0",
+        "@typescript-eslint/eslint-plugin": "^8.39.1",
+        "@typescript-eslint/parser": "^8.39.1",
+        "eslint": "^8.57.1",
+        "eslint-plugin-promise": "^7.2.1",
+        "globals": "^16.3.0",
         "typescript": "^5.4.5",
+        "typescript-eslint": "^8.39.1",
         "vitest": "^3.2.4",
-        "wrangler": "latest",
-        "eslint": "^8.57.0"
+        "wrangler": "latest"
       },
       "dependencies": {
         "@doist/todoist-api-typescript": "^5.1.1",

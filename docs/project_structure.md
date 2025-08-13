@@ -6,6 +6,7 @@ This document outlines the file and directory structure for the Todoist Reopener
 
 ```
 .
+├── .eslintrc.cjs
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
@@ -45,6 +46,8 @@ This document outlines the file and directory structure for the Todoist Reopener
 - **`.geminiignore`**: A file that tells the Gemini AI which files and folders to ignore.
 
 - **`.dockerignore`**: A file that tells Docker which files and folders to ignore.
+
+- **`.eslintrc.cjs`**: The configuration file for ESLint, defining linting rules and settings for the project.
 
 - **`package.json`**: The standard Node.js manifest file. It defines the project's name, scripts (like `npm run deploy`), and development dependencies (`wrangler`, `typescript`, and Cloudflare's type definitions).
 

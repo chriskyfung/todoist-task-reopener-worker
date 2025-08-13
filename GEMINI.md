@@ -10,6 +10,7 @@ This project is a serverless Cloudflare Worker that automatically reopens comple
 
 ```
 .
+├── .eslintrc.cjs
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
@@ -31,6 +32,7 @@ This project is a serverless Cloudflare Worker that automatically reopens comple
 - **`.gitignore`**: Specifies which files and directories to ignore in Git.
 - **`.geminiignore`**: Specifies which files and directories to ignore for the Gemini AI.
 - **`.dockerignore`**: Specifies which files and directories to ignore in Docker.
+- **`.eslintrc.cjs`**: The configuration file for ESLint.
 - **`Dockerfile`**: Defines the Docker image for the application.
 - **`LICENSE`**: The MIT License for the project.
 - **`package.json`**: The Node.js project manifest file.
