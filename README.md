@@ -25,6 +25,7 @@ The worker runs on a schedule, checking for recently completed tasks and reopeni
 
 ```
 .
+├── .eslintrc.cjs
 ├── Dockerfile
 ├── LICENSE
 ├── README.md

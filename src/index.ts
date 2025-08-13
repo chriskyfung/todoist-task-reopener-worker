@@ -24,7 +24,7 @@ export default {
 			}
 
 			console.log('Cron job triggered via fetch workaround...');
-			await this.scheduled(null as any, env, ctx);
+			await this.scheduled({} as ScheduledController, env, ctx);
 			return new Response('Scheduled job executed manually.');
 		}
 		return new Response('This worker is triggered by a cron schedule, not by HTTP requests.', { status: 404 });
