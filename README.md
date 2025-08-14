@@ -2,6 +2,10 @@
 
 This project is a serverless Cloudflare Worker that automatically reopens completed Todoist tasks that have the label `tracked` or `routine`. It is designed as a robust, reliable, and secure replacement for a similar n8n workflow.
 
+<figure style="text-align: center;">
+  <img src="assets/icon_150x150.png" alt="icon" style="border-radius: 16px"/>
+</figure>
+
 The worker runs on a schedule, checking for recently completed tasks and reopening them to ensure recurring items are not missed.
 
 ## Features
@@ -20,32 +24,6 @@ The worker runs on a schedule, checking for recently completed tasks and reopeni
 - [Wrangler](https://developers.cloudflare.com/workers/wrangler/)
 - [Vitest](https://vitest.dev/)
 - [ESLint](https://eslint.org/)
-
-## Project Structure
-
-```
-.
-├── .eslintrc.cjs
-├── Dockerfile
-├── LICENSE
-├── README.md
-├── GEMINI.md
-├── package.json
-├── src
-│   └── index.ts
-├── tsconfig.json
-├── wrangler.toml
-├── docs
-│   ├── development_plan.md
-│   └── project_structure.md
-├── logs
-│   ├── stderr.log
-│   └── stdout.log
-├── .env.example
-├── .gitignore
-├── .geminiignore
-└── .dockerignore
-```
 
 ## Getting Started
 
