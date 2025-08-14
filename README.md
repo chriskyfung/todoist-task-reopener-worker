@@ -68,6 +68,7 @@ The worker runs on a schedule, checking for recently completed tasks and reopeni
 | `npm run lint` | Lint the code. |
 | `npm run start` | Start the development server. |
 | `npm run test` | Run tests. |
+| `npm run test:watch` | Run tests in watch mode. |
 | `npm run test:coverage` | Run tests with coverage. |
 | `npm run tail` | View the logs of the worker in real-time. |
 
@@ -81,6 +82,28 @@ To deploy this worker, you will need a Cloudflare account and the [Wrangler CLI]
    ```bash
    npx wrangler deploy
    ```
+
+## Testing
+
+This project uses [Vitest](https://vitest.dev/) for unit testing. The tests are located in the `src` directory and have a `.test.ts` extension.
+
+- To run the tests, use the following command:
+
+  ```bash
+  npm test
+  ```
+
+- To run the tests in watch mode, use the following command:
+
+  ```bash
+  npm run test:watch
+  ```
+
+- To generate a coverage report, use the following command:
+
+  ```bash
+  npm run test:coverage
+  ```
 
 ## Manual Trigger
 

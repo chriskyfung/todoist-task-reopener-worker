@@ -22,7 +22,8 @@ The first step is to create the necessary files and structure for a Cloudflare W
         "dev": "wrangler dev",
         "lint": "eslint src/**/*.ts",
         "start": "wrangler dev",
-        "test": "vitest",
+        "test": "vitest run",
+        "test:watch": "vitest",
         "test:coverage": "vitest run --coverage",
         "tail": "wrangler tail"
       },
@@ -43,12 +44,14 @@ The first step is to create the necessary files and structure for a Cloudflare W
         "@eslint/js": "^9.33.0",
         "@typescript-eslint/eslint-plugin": "^8.39.1",
         "@typescript-eslint/parser": "^8.39.1",
+        "@vitest/coverage-v8": "^3.2.4",
         "eslint": "^8.57.1",
         "eslint-plugin-promise": "^7.2.1",
         "globals": "^16.3.0",
         "typescript": "^5.4.5",
         "typescript-eslint": "^8.39.1",
         "vitest": "^3.2.4",
+        "vitest-environment-miniflare": "^2.14.4",
         "wrangler": "latest"
       },
       "dependencies": {
