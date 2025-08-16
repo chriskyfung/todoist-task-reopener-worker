@@ -1,0 +1,21 @@
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+      - 'feat'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bug'
+  - title: '📝 Documentation'
+    labels:
+      - 'docs'
+      - 'documentation'
+  - title: '🔧 Maintenance'
+    labels:
+      - 'chore'
+      - 'refactor'
+template: |
+  ## What's Changed
+
+  $CHANGES
