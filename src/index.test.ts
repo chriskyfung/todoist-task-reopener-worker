@@ -1,5 +1,5 @@
+import { SELF, env } from 'cloudflare:test';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import worker from './index';
 import { TodoistApi } from '@doist/todoist-api-typescript';
 
 // Mock the Todoist API
@@ -10,11 +10,6 @@ vi.mock('@doist/todoist-api-typescript', () => {
 	return { TodoistApi };
 });
 
-const mockEnv = {
-	TODOIST_API_TOKEN: 'test-api-token',
-	CRON_SECRET_TOKEN: 'test-cron-secret',
-};
-
 describe('Todoist Reopener Worker', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
@@ -22,24 +17,21 @@ describe('Todoist Reopener Worker', () => {
 
 	describe('fetch handler', () => {
 		it('should return 404 for non-cron paths', async () => {
-			const request = new Request('http://localhost/');
-			const response = await worker.fetch(request, mockEnv, {} as any);
+			const response = await SELF.fetch('http://localhost/');
 			expect(response.status).toBe(404);
 			const text = await response.text();
 			expect(text).toBe('This worker is triggered by a cron schedule, not by HTTP requests.');
 		});
 
 		it('should return 401 for missing Authorization header', async () => {
-			const request = new Request('http://localhost/--run-cron');
-			const response = await worker.fetch(request, mockEnv, {} as any);
+			const response = await SELF.fetch('http://localhost/--run-cron');
 			expect(response.status).toBe(401);
 		});
 
 		it('should return 403 for invalid token', async () => {
-			const request = new Request('http://localhost/--run-cron', {
+			const response = await SELF.fetch('http://localhost/--run-cron', {
 				headers: { Authorization: 'Bearer invalid-token' },
 			});
-			const response = await worker.fetch(request, mockEnv, {} as any);
 			expect(response.status).toBe(403);
 		});
 
@@ -48,10 +40,9 @@ describe('Todoist Reopener Worker', () => {
 				items: [],
 				nextCursor: null,
 			});
-			const request = new Request('http://localhost/--run-cron', {
-				headers: { Authorization: `Bearer ${mockEnv.CRON_SECRET_TOKEN}` },
+			const response = await SELF.fetch('http://localhost/--run-cron', {
+				headers: { Authorization: `Bearer ${env.CRON_SECRET_TOKEN}` },
 			});
-			const response = await worker.fetch(request, mockEnv, {} as any);
 			expect(response.status).toBe(200);
 			const text = await response.text();
 			expect(text).toBe('Scheduled job executed manually.');
@@ -70,7 +61,7 @@ describe('Todoist Reopener Worker', () => {
 				nextCursor: null,
 			});
 
-			await worker.scheduled({} as ScheduledController, mockEnv, {} as any);
+			await SELF.scheduled();
 
 			expect(TodoistApi.prototype.getCompletedTasksByCompletionDate).toHaveBeenCalledTimes(1);
 			expect(TodoistApi.prototype.reopenTask).toHaveBeenCalledTimes(2);
@@ -89,7 +80,7 @@ describe('Todoist Reopener Worker', () => {
 					nextCursor: null,
 				});
 
-			await worker.scheduled({} as ScheduledController, mockEnv, {} as any);
+			await SELF.scheduled();
 
 			expect(TodoistApi.prototype.getCompletedTasksByCompletionDate).toHaveBeenCalledTimes(2);
 			expect(TodoistApi.prototype.reopenTask).toHaveBeenCalledTimes(2);

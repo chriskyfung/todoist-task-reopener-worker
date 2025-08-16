@@ -40,22 +40,22 @@ The first step is to create the necessary files and structure for a Cloudflare W
       "author": "Chris K.Y. Fung",
       "license": "MIT",
       "devDependencies": {
-        "@cloudflare/workers-types": "^4.20240430.0",
+        "@cloudflare/vitest-pool-workers": "^0.8.64",
+        "@cloudflare/workers-types": "^4.20250816.0",
         "@eslint/js": "^9.33.0",
         "@typescript-eslint/eslint-plugin": "^8.39.1",
         "@typescript-eslint/parser": "^8.39.1",
         "@vitest/coverage-v8": "^3.2.4",
-        "eslint": "^8.57.1",
+        "eslint": "^9.33.0",
         "eslint-plugin-promise": "^7.2.1",
         "globals": "^16.3.0",
         "typescript": "^5.4.5",
         "typescript-eslint": "^8.39.1",
         "vitest": "^3.2.4",
-        "vitest-environment-miniflare": "^2.14.4",
         "wrangler": "latest"
       },
       "dependencies": {
-        "@doist/todoist-api-typescript": "^5.1.1",
+        "@doist/todoist-api-typescript": "^5.1.2",
         "tslib": "^2.8.1"
       }
     }
@@ -73,9 +73,9 @@ The first step is to create the necessary files and structure for a Cloudflare W
         "strict": true,
         "esModuleInterop": true,
         "outDir": "dist",
-        "types": ["@cloudflare/workers-types"]
+        "types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers"]
       },
-      "include": ["src"]
+      "include": ["src", "tests"]
     }
     ```
 
