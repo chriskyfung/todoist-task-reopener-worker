@@ -1,5 +1,8 @@
 # Todoist Task Reopener Cloudflare Worker
 
+[![CI](https://github.com/chriskyfung/todoist-reopener-worker/actions/workflows/ci.yml/badge.svg)](https://github.com/chriskyfung/todoist-reopener-worker/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/chriskyfung/todoist-reopener-worker/branch/main/graph/badge.svg)](https://codecov.io/gh/chriskyfung/todoist-reopener-worker)
+
 This project is a serverless Cloudflare Worker that automatically reopens completed Todoist tasks that have the label `tracked` or `routine`. It is designed as a robust, reliable, and secure replacement for a similar n8n workflow.
 
 <figure style="text-align: center;">
@@ -15,6 +18,15 @@ The worker runs on a schedule, checking for recently completed tasks and reopeni
 - **Scheduled Execution:** Uses a cron trigger to run on a schedule.
 - **Secure:** Uses Cloudflare's secrets store to manage the Todoist API token.
 - **Stateless:** Does not store any data.
+
+## CI/CD
+
+This project uses GitHub Actions to automate the development workflow. The following workflows are in place:
+
+- **CI:** On every push and pull request to the `main` branch, the CI workflow runs linting, testing, and building to ensure code quality and that the project is always in a working state.
+- **CodeQL:** The CodeQL workflow runs on every push and pull request to the `main` branch to analyze the code for security vulnerabilities.
+- **Dependabot:** Dependabot is configured to automatically create pull requests to keep the project's dependencies up-to-date.
+- **Release Drafter:** The Release Drafter workflow automatically creates draft release notes as pull requests are merged, making it easier to create new releases.
 
 ## Technologies
 

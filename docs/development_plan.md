@@ -137,3 +137,20 @@ This phase outlines the final steps to get the worker running live.
     ```bash
     npm run tail
     ```
+
+## Phase 4: CI/CD and Automation
+
+To ensure code quality, maintain security, and automate the development workflow, a CI/CD pipeline has been set up using GitHub Actions.
+
+1.  **Continuous Integration:** A CI workflow is configured to run on every push and pull request to the `main` branch. This workflow performs the following checks:
+    *   **Linting:** Ensures the code adheres to the project's coding standards.
+    *   **Testing:** Runs the test suite to verify the functionality of the worker.
+    *   **Building:** Compiles the TypeScript code to ensure it is valid.
+    *   **Dependency Review:** Scans for vulnerable dependencies to prevent introducing security risks.
+    *   **Test Coverage:** Uploads test coverage reports to Codecov to track the quality of the tests.
+
+2.  **Security Scanning:** A CodeQL workflow is set up to perform static analysis of the code to find security vulnerabilities.
+
+3.  **Dependency Management:** Dependabot is configured to automatically create pull requests to keep the project's dependencies up-to-date.
+
+4.  **Release Automation:** A Release Drafter workflow is in place to automatically create draft release notes as pull requests are merged, simplifying the release process.

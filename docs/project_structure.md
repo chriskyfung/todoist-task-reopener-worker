@@ -6,6 +6,13 @@ This document outlines the file and directory structure for the Todoist Reopener
 
 ```
 .
+├── .github
+│   ├── dependabot.yml
+│   ├── release-drafter.yml
+│   └── workflows
+│       ├── ci.yml
+│       ├── codeql.yml
+│       └── release-drafter.yml
 ├── .eslintrc.cjs
 ├── Dockerfile
 ├── LICENSE
@@ -32,6 +39,14 @@ This document outlines the file and directory structure for the Todoist Reopener
 
 - **`src/`**: This directory holds all of your worker's source code.
   - **`index.ts`**: This is the main entry point for the worker. It will contain all the TypeScript logic that gets executed when the cron trigger fires. This includes connecting to the Todoist API, fetching completed tasks, and sending the requests to reopen them.
+
+- **`.github/`**: This directory contains all the GitHub Actions workflows and configurations.
+  - **`dependabot.yml`**: Configuration for Dependabot to automatically update dependencies.
+  - **`release-drafter.yml`**: Configuration for Release Drafter to automatically draft release notes.
+  - **`workflows/`**: This directory contains all the GitHub Actions workflows.
+    - **`ci.yml`**: The main CI/CD workflow that runs linting, testing, and building.
+    - **`codeql.yml`**: The workflow for CodeQL to analyze the code for security vulnerabilities.
+    - **`release-drafter.yml`**: The workflow for Release Drafter.
 
 - **`docs/`**: This directory contains all the project documentation.
   - **`development_plan.md`**: This document outlines the plan to migrate the n8n workflow to a robust and reliable Cloudflare Worker.
