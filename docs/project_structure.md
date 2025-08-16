@@ -13,7 +13,7 @@ This document outlines the file and directory structure for the Todoist Reopener
 │       ├── ci.yml
 │       ├── codeql.yml
 │       └── release-drafter.yml
-├── .eslintrc.cjs
+├── eslint.config.js
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
@@ -62,7 +62,7 @@ This document outlines the file and directory structure for the Todoist Reopener
 
 - **`.dockerignore`**: A file that tells Docker which files and folders to ignore.
 
-- **`.eslintrc.cjs`**: The configuration file for ESLint, defining linting rules and settings for the project.
+- **`eslint.config.js`**: The configuration file for ESLint, defining linting rules and settings for the project.
 
 - **`package.json`**: The standard Node.js manifest file. It defines the project's name, scripts (like `npm run deploy`), and development dependencies (`wrangler`, `typescript`, and Cloudflare's type definitions).
 

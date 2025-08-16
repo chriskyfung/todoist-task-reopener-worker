@@ -97,7 +97,7 @@ To deploy this worker, you will need a Cloudflare account and the [Wrangler CLI]
 
 ## Testing
 
-This project uses [Vitest](https://vitest.dev/) for unit testing. The tests are located in the `src` directory and have a `.test.ts` extension.
+This project uses [Vitest](https://vitest.dev/) for unit testing. The tests are run in a realistic Cloudflare Workers environment using `@cloudflare/vitest-pool-workers`. The tests are located in the `src` directory and have a `.test.ts` extension.
 
 - To run the tests, use the following command:
 
