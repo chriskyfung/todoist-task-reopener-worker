@@ -1,6 +1,6 @@
 {
   "name": "todoist-reopener-worker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Cloudflare Worker that automatically reopens completed Todoist tasks.",
   "private": true,
   "main": "src/index.ts",
