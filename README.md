@@ -11,6 +11,10 @@ This project is a serverless Cloudflare Worker that automatically reopens comple
 
 The worker runs on a schedule, checking for recently completed tasks and reopening them to ensure recurring items are not missed.
 
+## Background
+
+This project is inspired by an [n8n-based Todoist automation](https://medium.com/@chriskyfung/never-forget-a-recurring-task-again-an-n8n-todoist-automation-guide-4a810fef06c2) (Medium article).
+
 ## Features
 
 - **Automated Task Reopening:** Automatically reopens completed Todoist tasks with a specific label.
