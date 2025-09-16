@@ -20,6 +20,10 @@ updates:
           - "@eslint*"
           - "typescript*"
           - "@typescript*"
+          - "vitest*"
+          - "@vitest/*"
+          - "@cloudflare/*"
+          - "wrangler"
       eslint-dependencies:
         patterns:
           - "eslint*"
@@ -28,6 +32,14 @@ updates:
         patterns:
           - "typescript*"
           - "@typescript*"
+      vitest-dependencies:
+        patterns:
+          - "vitest*"
+          - "@vitest/*"
+      cloudflare-dependencies:
+        patterns:
+          - "@cloudflare/*"
+          - "wrangler"
 
   # Enable version updates for Docker
   - package-ecosystem: "docker"
