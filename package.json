@@ -45,7 +45,7 @@
     "wrangler": "latest"
   },
   "dependencies": {
-    "@doist/todoist-api-typescript": "^5.5.0",
+    "@doist/todoist-api-typescript": "^5.5.1",
     "tslib": "^2.8.1"
   }
 }
