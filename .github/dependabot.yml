@@ -24,12 +24,10 @@ updates:
           - "@vitest/*"
           - "@cloudflare/*"
           - "wrangler"
-      eslint-dependencies:
+      eslint-typescript-dependencies:
         patterns:
           - "eslint*"
           - "@eslint*"
-      typescript-dependencies:
-        patterns:
           - "typescript*"
           - "@typescript*"
       vitest-dependencies:
