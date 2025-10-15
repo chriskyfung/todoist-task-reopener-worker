@@ -9,5 +9,8 @@ export default defineWorkersConfig({
         },
       },
     },
+    coverage: {
+      provider: "istanbul",
+    },
   },
 });

@@ -1,7 +1,9 @@
 # Todoist Task Reopener Cloudflare Worker
 
-[![CI](https://github.com/chriskyfung/todoist-reopener-worker/actions/workflows/ci.yml/badge.svg)](https://github.com/chriskyfung/todoist-reopener-worker/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/chriskyfung/todoist-reopener-worker/branch/main/graph/badge.svg)](https://codecov.io/gh/chriskyfung/todoist-reopener-worker)
+[![CI](https://github.com/chriskyfung/todoist-task-reopener-worker/actions/workflows/ci.yml/badge.svg)](https://github.com/chriskyfung/todoist-task-reopener-worker/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/chriskyfung/todoist-task-reopener-worker/branch/main/graph/badge.svg)](https://codecov.io/gh/chriskyfung/todoist-task-reopener-worker)
+
+
 
 This project is a serverless Cloudflare Worker that automatically reopens completed Todoist tasks that have the label `tracked` or `routine`. It is designed as a robust, reliable, and secure replacement for a similar n8n workflow.
 

@@ -4,9 +4,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -16,6 +16,7 @@ jobs:
     - uses: actions/checkout@v5
 
     - name: Dependency Review
+      if: github.event_name == 'pull_request'
       uses: actions/dependency-review-action@v4
 
     - name: Use Node.js
@@ -29,6 +30,11 @@ jobs:
 
     - name: Lint code
       run: npm run lint
+
+    - name: Create .dev.vars file
+      run: |
+        echo "TODOIST_API_TOKEN='${{ secrets.TODOIST_API_TOKEN }}'" > .dev.vars
+        echo "CRON_SECRET_TOKEN='${{ secrets.CRON_SECRET_TOKEN }}'" >> .dev.vars
 
     - name: Run tests and collect coverage
       run: npm run test:coverage
