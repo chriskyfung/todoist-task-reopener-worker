@@ -12,5 +12,6 @@ export default defineWorkersConfig({
     coverage: {
       provider: "istanbul",
     },
+    tsconfig: './tsconfig.test.json',
   },
 });
