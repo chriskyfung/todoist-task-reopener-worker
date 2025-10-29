@@ -34,12 +34,9 @@ updates:
         patterns:
           - "vitest*"
           - "@vitest/*"
-        # Prevent major version upgrades
-        ignore:
-          - dependency-name: "vitest"
-            update-types: ["version-update:semver-major"]
-          - dependency-name: "@vitest/*"
-            update-types: ["version-update:semver-major"]
+        update-types:
+          - "minor"
+          - "patch"
       cloudflare-dependencies:
         patterns:
           - "@cloudflare/*"
