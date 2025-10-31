@@ -64,7 +64,7 @@ export default {
 			console.log(`Found ${allTasksToReopen.length} total completed tasks with '@tracked' or '@routine' to reopen.`);
 
 			for (const task of allTasksToReopen) {
-				console.log(`Reopening task: "${task.content}" (ID: ${task.id})`);
+				console.log(`Reopening task with ID: ${task.id}`);
 				await api.reopenTask(task.id);
 			}
 
