@@ -63,9 +63,13 @@ export default {
 
 			console.log(`Found ${allTasksToReopen.length} total completed tasks with '@tracked' or '@routine' to reopen.`);
 
-			for (const task of allTasksToReopen) {
-				console.log(`Reopening task with ID: ${task.id}`);
-				await api.reopenTask(task.id);
+			const CHUNK_SIZE = 10; // Adjust based on API rate limits  
+			for (let i = 0; i < allTasksToReopen.length; i += CHUNK_SIZE) {
+				const chunk = allTasksToReopen.slice(i, i + CHUNK_SIZE);
+				await Promise.all(chunk.map(task => {
+					console.log(`Reopening task with ID: ${task.id}`);
+					return api.reopenTask(task.id);
+				}));
 			}
 
 			console.log("Cron job finished successfully.");
