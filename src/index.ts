@@ -1,5 +1,20 @@
 import { TodoistApi, Task } from '@doist/todoist-api-typescript';
 
+function timingSafeEqual(a: string, b: string): boolean {
+	// While this leaks length information, it's a common practice and still
+	// requires an attacker to guess the entire content of the string.
+	if (a.length !== b.length) {
+		return false;
+	}
+
+	let result = 0;
+	for (let i = 0; i < a.length; i++) {
+		result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+	}
+
+	return result === 0;
+}
+
 interface Env {
 	TODOIST_API_TOKEN: string;
 	CRON_SECRET_TOKEN: string;
@@ -19,7 +34,7 @@ export default {
 			}
 
 			const token = authHeader.substring(7);
-			if (token !== env.CRON_SECRET_TOKEN) {
+			if (!timingSafeEqual(token, env.CRON_SECRET_TOKEN)) {
 				return new Response('Invalid token.', { status: 403 });
 			}
 
