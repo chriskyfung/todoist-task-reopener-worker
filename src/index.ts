@@ -1,5 +1,20 @@
 import { TodoistApi, Task } from '@doist/todoist-api-typescript';
 
+function timingSafeEqual(a: string, b: string): boolean {
+	// While this leaks length information, it's a common practice and still
+	// requires an attacker to guess the entire content of the string.
+	if (a.length !== b.length) {
+		return false;
+	}
+
+	let result = 0;
+	for (let i = 0; i < a.length; i++) {
+		result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+	}
+
+	return result === 0;
+}
+
 interface Env {
 	TODOIST_API_TOKEN: string;
 	CRON_SECRET_TOKEN: string;
@@ -19,7 +34,7 @@ export default {
 			}
 
 			const token = authHeader.substring(7);
-			if (token !== env.CRON_SECRET_TOKEN) {
+			if (!timingSafeEqual(token, env.CRON_SECRET_TOKEN)) {
 				return new Response('Invalid token.', { status: 403 });
 			}
 
@@ -63,9 +78,13 @@ export default {
 
 			console.log(`Found ${allTasksToReopen.length} total completed tasks with '@tracked' or '@routine' to reopen.`);
 
-			for (const task of allTasksToReopen) {
-				console.log(`Reopening task: "${task.content}" (ID: ${task.id})`);
-				await api.reopenTask(task.id);
+			const CHUNK_SIZE = 10; // Adjust based on API rate limits  
+			for (let i = 0; i < allTasksToReopen.length; i += CHUNK_SIZE) {
+				const chunk = allTasksToReopen.slice(i, i + CHUNK_SIZE);
+				await Promise.all(chunk.map(task => {
+					console.log(`Reopening task with ID: ${task.id}`);
+					return api.reopenTask(task.id);
+				}));
 			}
 
 			console.log("Cron job finished successfully.");
