@@ -5,11 +5,16 @@
 
 version: 2
 updates:
-  # Enable version updates for npm (only dependencies, not devDependencies)
+  # Enable version updates for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 5
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     groups:
       production-dependencies:
         dependency-type: "production"
@@ -24,7 +29,7 @@ updates:
           - "@vitest/*"
           - "@cloudflare/*"
           - "wrangler"
-      eslint-typescript-dependencies:
+      eslint-dependencies:
         patterns:
           - "eslint*"
           - "@eslint*"
@@ -41,6 +46,12 @@ updates:
         patterns:
           - "@cloudflare/*"
           - "wrangler"
+    ignore:
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitest/*"
+        update-types: ["version-update:semver-major"]
+
 
   # Enable version updates for Docker
   - package-ecosystem: "docker"
