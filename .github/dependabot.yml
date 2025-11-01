@@ -5,7 +5,7 @@
 
 version: 2
 updates:
-  # Enable version updates for npm (production dependencies)
+  # Enable version updates for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -47,10 +47,10 @@ updates:
           - "@cloudflare/*"
           - "wrangler"
     ignore:
-      - dependency-name: "vitest*"
+      - dependency-name: "vitest"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@vitest/*"
-        update-types: ["version-update:semver-major"] 
+        update-types: ["version-update:semver-major"]
 
 
   # Enable version updates for Docker
