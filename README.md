@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/chriskyfung/todoist-task-reopener-worker/actions/workflows/ci.yml/badge.svg)](https://github.com/chriskyfung/todoist-task-reopener-worker/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/chriskyfung/todoist-task-reopener-worker/graph/badge.svg)](https://codecov.io/github/chriskyfung/todoist-task-reopener-worker)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![GitHub last commit](https://img.shields.io/github/last-commit/chriskyfung/todoist-task-reopener-worker)
 
 
 
