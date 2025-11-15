@@ -42,7 +42,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.3",
     "vitest": "^3.2.4",
-    "wrangler": "latest"
+    "wrangler": "^4.47.0"
   },
   "dependencies": {
     "@doist/todoist-api-typescript": "^5.7.1",
