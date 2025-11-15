@@ -1,7 +1,7 @@
 # Todoist Task Reopener Cloudflare Worker
 
 [![CI](https://github.com/chriskyfung/todoist-task-reopener-worker/actions/workflows/ci.yml/badge.svg)](https://github.com/chriskyfung/todoist-task-reopener-worker/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/chriskyfung/todoist-task-reopener-worker/branch/main/graph/badge.svg)](https://codecov.io/gh/chriskyfung/todoist-task-reopener-worker)
+[![codecov](https://codecov.io/github/chriskyfung/todoist-task-reopener-worker/graph/badge.svg)](https://codecov.io/github/chriskyfung/todoist-task-reopener-worker)
 
 
 
