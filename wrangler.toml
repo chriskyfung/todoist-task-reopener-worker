@@ -1,6 +1,6 @@
 name = "todoist-task-reopener"
 main = "src/index.ts"
-compatibility_date = "2024-09-23"
+compatibility_date = "2025-08-12"
 compatibility_flags = ["nodejs_compat"]
 
 [triggers]
