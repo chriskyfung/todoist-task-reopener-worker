@@ -29,6 +29,9 @@
   ],
   "author": "Chris K.Y. Fung",
   "license": "MIT",
+  "engines": {
+      "node": ">=20.0.0"
+  },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.10.8",
     "@cloudflare/workers-types": "^4.20251115.0",
