@@ -1,97 +1,114 @@
 import { TodoistApi, Task } from '@doist/todoist-api-typescript';
 
 function timingSafeEqual(a: string, b: string): boolean {
-	// While this leaks length information, it's a common practice and still
-	// requires an attacker to guess the entire content of the string.
-	if (a.length !== b.length) {
-		return false;
-	}
+  // While this leaks length information, it's a common practice and still
+  // requires an attacker to guess the entire content of the string.
+  if (a.length !== b.length) {
+    return false;
+  }
 
-	let result = 0;
-	for (let i = 0; i < a.length; i++) {
-		result |= a.charCodeAt(i) ^ b.charCodeAt(i);
-	}
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
 
-	return result === 0;
+  return result === 0;
 }
 
 interface Env {
-	TODOIST_API_TOKEN: string;
-	CRON_SECRET_TOKEN: string;
+  TODOIST_API_TOKEN: string;
+  CRON_SECRET_TOKEN: string;
 }
 
 export default {
-	// This is a temporary workaround for a wrangler bug.
-	// It allows us to test the scheduled job by visiting a URL.
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		const url = new URL(request.url);
-		console.log(`Received fetch request for path: ${url.pathname}`); // Added for debugging
+  // This is a temporary workaround for a wrangler bug.
+  // It allows us to test the scheduled job by visiting a URL.
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> {
+    const url = new URL(request.url);
+    console.log(`Received fetch request for path: ${url.pathname}`); // Added for debugging
 
-		if (url.pathname.startsWith('/--run-cron')) {
-			const authHeader = request.headers.get('Authorization');
-			if (!authHeader || !authHeader.startsWith('Bearer ')) {
-				return new Response('Missing or invalid Authorization header.', { status: 401 });
-			}
+    if (url.pathname.startsWith('/--run-cron')) {
+      const authHeader = request.headers.get('Authorization');
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return new Response('Missing or invalid Authorization header.', {
+          status: 401,
+        });
+      }
 
-			const token = authHeader.substring(7);
-			if (!timingSafeEqual(token, env.CRON_SECRET_TOKEN)) {
-				return new Response('Invalid token.', { status: 403 });
-			}
+      const token = authHeader.substring(7);
+      if (!timingSafeEqual(token, env.CRON_SECRET_TOKEN)) {
+        return new Response('Invalid token.', { status: 403 });
+      }
 
-			console.log('Cron job triggered via fetch workaround...');
-			await this.scheduled({} as ScheduledController, env, ctx);
-			return new Response('Scheduled job executed manually.');
-		}
-		return new Response('This worker is triggered by a cron schedule, not by HTTP requests.', { status: 404 });
-		
-	},
+      console.log('Cron job triggered via fetch workaround...');
+      await this.scheduled({} as ScheduledController, env, ctx);
+      return new Response('Scheduled job executed manually.');
+    }
+    return new Response(
+      'This worker is triggered by a cron schedule, not by HTTP requests.',
+      { status: 404 },
+    );
+  },
 
-	async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
-		console.log("Cron job started: Reopening tracked/routine Todoist tasks.");
+  async scheduled(
+    controller: ScheduledController,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<void> {
+    console.log('Cron job started: Reopening tracked/routine Todoist tasks.');
 
-		try {
-			const api = new TodoistApi(env.TODOIST_API_TOKEN);
-			
-			const allTasksToReopen: Task[] = [];
-			let cursor: string | null = null;
+    try {
+      const api = new TodoistApi(env.TODOIST_API_TOKEN);
 
-			const since = new Date();
-			since.setDate(since.getDate() - 90); // 90 days ago
-			const until = new Date(); // Now
+      const allTasksToReopen: Task[] = [];
+      let cursor: string | null = null;
 
-			do {
-				console.log(cursor ? `Fetching next page with cursor: ${cursor}`: 'Fetching first page of completed tasks...');
+      const since = new Date();
+      since.setDate(since.getDate() - 90); // 90 days ago
+      const until = new Date(); // Now
 
-				const response = await api.getCompletedTasksByCompletionDate({
-					filterQuery: '@tracked | @routine',
-					since: since.toISOString(),
-					until: until.toISOString(),
-					limit: 50, // Use the default limit
-					cursor: cursor,
-				});
+      do {
+        console.log(
+          cursor
+            ? `Fetching next page with cursor: ${cursor}`
+            : 'Fetching first page of completed tasks...',
+        );
 
-				allTasksToReopen.push(...response.items);
-				cursor = response.nextCursor;
+        const response = await api.getCompletedTasksByCompletionDate({
+          filterQuery: '@tracked | @routine',
+          since: since.toISOString(),
+          until: until.toISOString(),
+          limit: 50, // Use the default limit
+          cursor: cursor,
+        });
 
-			} while (cursor);
+        allTasksToReopen.push(...response.items);
+        cursor = response.nextCursor;
+      } while (cursor);
 
+      console.log(
+        `Found ${allTasksToReopen.length} total completed tasks with '@tracked' or '@routine' to reopen.`,
+      );
 
-			console.log(`Found ${allTasksToReopen.length} total completed tasks with '@tracked' or '@routine' to reopen.`);
+      const CHUNK_SIZE = 10; // Adjust based on API rate limits
+      for (let i = 0; i < allTasksToReopen.length; i += CHUNK_SIZE) {
+        const chunk = allTasksToReopen.slice(i, i + CHUNK_SIZE);
+        await Promise.all(
+          chunk.map((task) => {
+            console.log(`Reopening task with ID: ${task.id}`);
+            return api.reopenTask(task.id);
+          }),
+        );
+      }
 
-			const CHUNK_SIZE = 10; // Adjust based on API rate limits  
-			for (let i = 0; i < allTasksToReopen.length; i += CHUNK_SIZE) {
-				const chunk = allTasksToReopen.slice(i, i + CHUNK_SIZE);
-				await Promise.all(chunk.map(task => {
-					console.log(`Reopening task with ID: ${task.id}`);
-					return api.reopenTask(task.id);
-				}));
-			}
-
-			console.log("Cron job finished successfully.");
-
-		} catch (error) {
-			console.error("An error occurred during the cron job execution:");
-			console.error(error);
-		}
-	},
+      console.log('Cron job finished successfully.');
+    } catch (error) {
+      console.error('An error occurred during the cron job execution:');
+      console.error(error);
+    }
+  },
 };

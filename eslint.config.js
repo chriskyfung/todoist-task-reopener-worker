@@ -1,13 +1,13 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 import prettier from 'eslint-plugin-prettier';
 
 export default tseslint.config(
   {
-    ignores: ["dist", "node_modules"],
+    ignores: ['dist', 'node_modules'],
   },
   tseslint.configs.recommended,
-{
+  {
     plugins: {
       prettier,
     },
@@ -19,14 +19,14 @@ export default tseslint.config(
     languageOptions: {
       globals: {
         ...globals.serviceworker,
-        ScheduledController: "readonly",
-        ExecutionContext: "readonly",
+        ScheduledController: 'readonly',
+        ExecutionContext: 'readonly',
       },
     },
     rules: {
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-      "no-undef": "error",
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+      'no-undef': 'error',
     },
-  }
+  },
 );
