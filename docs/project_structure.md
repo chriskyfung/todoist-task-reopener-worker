@@ -14,6 +14,8 @@ This document outlines the file and directory structure for the Todoist Reopener
 │       ├── codeql.yml
 │       └── release-drafter.yml
 ├── eslint.config.js
+├── .prettierignore
+├── .prettierrc.json
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
@@ -61,6 +63,10 @@ This document outlines the file and directory structure for the Todoist Reopener
 - **`.geminiignore`**: A file that tells the Gemini AI which files and folders to ignore.
 
 - **`.dockerignore`**: A file that tells Docker which files and folders to ignore.
+
+- **`.prettierignore`**: A file that tells Prettier which files and folders to ignore.
+
+- **`.prettierrc.json`**: The configuration file for Prettier.
 
 - **`eslint.config.js`**: The configuration file for ESLint, defining linting rules and settings for the project.
 

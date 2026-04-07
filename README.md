@@ -5,8 +5,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub last commit](https://img.shields.io/github/last-commit/chriskyfung/todoist-task-reopener-worker)
 
-
-
 This project is a serverless Cloudflare Worker that automatically reopens completed Todoist tasks that have the label `tracked` or `routine`. It is designed as a robust, reliable, and secure replacement for a similar n8n workflow.
 
 <figure style="text-align: center;">
@@ -44,6 +42,7 @@ This project uses GitHub Actions to automate the development workflow. The follo
 - [Wrangler](https://developers.cloudflare.com/workers/wrangler/)
 - [Vitest](https://vitest.dev/)
 - [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
 
 ## Getting Started
 
@@ -79,18 +78,20 @@ This project uses GitHub Actions to automate the development workflow. The follo
 
 ## Commands
 
-| Command | Description |
-| --- | --- |
-| `npm run build` | Build the project. |
-| `npm run clean` | Remove the `dist` and `node_modules` directories. |
-| `npm run deploy` | Deploy the worker. |
-| `npm run dev` | Start the development server. |
-| `npm run lint` | Lint the code. |
-| `npm run start` | Start the development server. |
-| `npm run test` | Run tests. |
-| `npm run test:watch` | Run tests in watch mode. |
-| `npm run test:coverage` | Run tests with coverage. |
-| `npm run tail` | View the logs of the worker in real-time. |
+| Command                 | Description                                       |
+| ----------------------- | ------------------------------------------------- |
+| `npm run build`         | Build the project.                                |
+| `npm run clean`         | Remove the `dist` and `node_modules` directories. |
+| `npm run deploy`        | Deploy the worker.                                |
+| `npm run dev`           | Start the development server.                     |
+| `npm run lint`          | Lint the code.                                    |
+| `npm run format`        | Format the code.                                  |
+| `npm run format:check`  | Check if the code is formatted.                   |
+| `npm run start`         | Start the development server.                     |
+| `npm run test`          | Run tests.                                        |
+| `npm run test:watch`    | Run tests in watch mode.                          |
+| `npm run test:coverage` | Run tests with coverage.                          |
+| `npm run tail`          | View the logs of the worker in real-time.         |
 
 ## Deployment
 

@@ -10,11 +10,18 @@ This project is a serverless Cloudflare Worker that automatically reopens comple
 
 ```
 .
-├── .eslintrc.cjs
+├── .dockerignore
+├── .env.example
+├── .geminiignore
+├── .gitignore
+├── .prettierignore
+├── .prettierrc.json
 ├── Dockerfile
+├── eslint.config.js
+├── GEMINI.md
 ├── LICENSE
-├── README.md
 ├── package.json
+├── README.md
 ├── src
 │   └── index.ts
 ├── tsconfig.json
@@ -32,7 +39,9 @@ This project is a serverless Cloudflare Worker that automatically reopens comple
 - **`.gitignore`**: Specifies which files and directories to ignore in Git.
 - **`.geminiignore`**: Specifies which files and directories to ignore for the Gemini AI.
 - **`.dockerignore`**: Specifies which files and directories to ignore in Docker.
-- **`.eslintrc.cjs`**: The configuration file for ESLint.
+- **`.prettierignore`**: Specifies which files and directories to ignore for Prettier.
+- **`.prettierrc.json`**: The configuration file for Prettier.
+- **`eslint.config.js`**: The configuration file for ESLint.
 - **`Dockerfile`**: Defines the Docker image for the application.
 - **`LICENSE`**: The MIT License for the project.
 - **`package.json`**: The Node.js project manifest file.
@@ -54,6 +63,8 @@ This project is a serverless Cloudflare Worker that automatically reopens comple
 - `npm run dev`: Start the development server.
 - `npm run deploy`: Deploy the worker.
 - `npm run lint`: Lint the code.
+- `npm run format`: Format the code.
+- `npm run format:check`: Check if the code is formatted.
 - `npm run test`: Run tests.
 - `npm run test:coverage`: Run tests with coverage.
 - `npm run tail`: View the logs of the worker in real-time.

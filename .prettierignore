@@ -1,0 +1,9 @@
+# Ignore directories
+dist
+node_modules
+coverage
+.github
+.wrangler
+
+# Ignore files
+package-lock.json
