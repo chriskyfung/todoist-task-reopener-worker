@@ -1,14 +1,20 @@
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
-  test: {
-    poolOptions: {
-      workers: {
-        wrangler: {
-          configPath: "./wrangler.toml",
-        },
+export default defineConfig({
+  plugins: [
+    cloudflareTest({
+      miniflare: {
+        // Required to use `SELF.scheduled()`. This is an experimental
+        // compatibility flag, and cannot be enabled in production.
+        compatibilityFlags: ["service_binding_extra_handlers"],
       },
-    },
+      wrangler: {        
+        configPath: "./wrangler.toml",
+      },
+    }),
+  ],
+  test: {
     coverage: {
       provider: "istanbul",
     },
