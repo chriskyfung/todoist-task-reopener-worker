@@ -6,9 +6,10 @@
     "lib": ["esnext"],
     "strict": true,
     "esModuleInterop": true,
-    "rootDir": "src",
+    "rootDir": "./src",
     "outDir": "dist",
     "types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers"]
   },
-  "include": ["src", "tests"]
+  "include": ["src", "tests"],
+  "exclude": ["vitest.config.ts"]
 }
