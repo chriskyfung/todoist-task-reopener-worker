@@ -32,7 +32,7 @@
   "author": "Chris K.Y. Fung",
   "license": "MIT",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=24.18.0"
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.14.9",
