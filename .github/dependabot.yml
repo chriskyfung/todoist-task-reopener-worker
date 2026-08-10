@@ -51,6 +51,9 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@vitest/*"
         update-types: ["version-update:semver-major"]
+    commit-message:
+      include: scope
+      prefix: "chore"
 
 
   # Enable version updates for Docker
@@ -60,6 +63,8 @@ updates:
     # Check for updates once a week
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "build(deps)"
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -68,3 +73,5 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "chore(ci)"
