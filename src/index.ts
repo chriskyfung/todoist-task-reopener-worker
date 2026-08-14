@@ -1,4 +1,4 @@
-import { TodoistApi, Task } from '@doist/todoist-api-typescript';
+import { TodoistApi, Task } from '@doist/todoist-sdk';
 
 function timingSafeEqual(a: string, b: string): boolean {
   // While this leaks length information, it's a common practice and still

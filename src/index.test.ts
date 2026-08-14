@@ -1,9 +1,9 @@
 import { SELF, env } from 'cloudflare:test';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { TodoistApi } from '@doist/todoist-api-typescript';
+import { TodoistApi } from '@doist/todoist-sdk';
 
 // Mock the Todoist API
-vi.mock('@doist/todoist-api-typescript', () => {
+vi.mock('@doist/todoist-sdk', () => {
   const TodoistApi = vi.fn();
   TodoistApi.prototype.getCompletedTasksByCompletionDate = vi.fn();
   TodoistApi.prototype.reopenTask = vi.fn();
