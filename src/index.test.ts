@@ -1,6 +1,15 @@
 import { SELF, env } from 'cloudflare:test';
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import {
+  describe,
+  it,
+  expect,
+  vi,
+  beforeEach,
+  afterEach,
+  type Mock,
+} from 'vitest';
 import { TodoistApi } from '@doist/todoist-sdk';
+import { customFetch } from './adapters/http';
 
 // Mock the Todoist API
 vi.mock('@doist/todoist-sdk', () => {
@@ -124,5 +133,79 @@ describe('Todoist Reopener Worker', () => {
       ).toHaveBeenCalledTimes(1);
       // The scheduled handler catches errors, so it should not throw
     });
+  });
+});
+
+describe('customFetch adapter', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('should convert a successful Response to CustomFetchResponse', async () => {
+    const mockResponse = new Response('{"height":30}', {
+      status: 200,
+      statusText: 'OK',
+      headers: { 'content-type': 'application/json; charset=utf-8' },
+    });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse));
+
+    const result = await customFetch('https://api.example.com/data', {
+      method: 'GET',
+      timeout: 5000,
+    });
+
+    expect(result.ok).toBe(true);
+    expect(result.status).toBe(200);
+    expect(result.statusText).toBe('OK');
+    expect(result.headers['content-type']).toContain('application/json');
+    await expect(result.json()).resolves.toEqual({ height: 30 });
+  });
+
+  it('should strip the timeout option before calling native fetch', async () => {
+    const fetchSpy = vi.fn().mockResolvedValue(new Response('ok'));
+    vi.stubGlobal('fetch', fetchSpy);
+
+    await customFetch('https://api.example.com/data', {
+      method: 'POST',
+      timeout: 7000,
+    });
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    const [, init] = fetchSpy.mock.calls[0];
+    expect(init).not.toHaveProperty('timeout');
+  });
+
+  it('should delegate text() to the response', async () => {
+    const mockResponse = new Response('hello world');
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse));
+
+    const result = await customFetch('https://api.example.com/data');
+
+    await expect(result.text()).resolves.toBe('hello world');
+  });
+
+  it('should delegate arrayBuffer() to the response', async () => {
+    const mockResponse = new Response('hello world');
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse));
+
+    const result = await customFetch('https://api.example.com/data');
+
+    const buffer = await result.arrayBuffer!();
+    expect(new TextDecoder().decode(buffer)).toBe('hello world');
+  });
+
+  it('should preserve non-ok status and statusText', async () => {
+    const mockResponse = new Response('Not found', {
+      status: 404,
+      statusText: 'Not Found',
+    });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse));
+
+    const result = await customFetch('https://api.example.com/missing');
+
+    expect(result.ok).toBe(false);
+    expect(result.status).toBe(404);
+    expect(result.statusText).toBe('Not Found');
+    await expect(result.text()).resolves.toBe('Not found');
   });
 });
