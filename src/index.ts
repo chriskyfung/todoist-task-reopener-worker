@@ -1,28 +1,9 @@
 import {
   TodoistApi,
-  type CustomFetch,
   type Task,
   type GetCompletedTasksByCompletionDateArgs,
 } from '@doist/todoist-sdk';
-
-const customFetch: CustomFetch = async (url, options) => {
-  const init = { ...options };
-  delete init.timeout;
-  const response = await fetch(url, init);
-  const headers: Record<string, string> = {};
-  response.headers.forEach((value, key) => {
-    headers[key] = value;
-  });
-  return {
-    ok: response.ok,
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-    text: () => response.text(),
-    json: () => response.json(),
-    arrayBuffer: () => response.arrayBuffer(),
-  };
-};
+import { customFetch } from './adapters/http';
 
 function timingSafeEqual(a: string, b: string): boolean {
   // While this leaks length information, it's a common practice and still
