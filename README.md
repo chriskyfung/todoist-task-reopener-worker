@@ -128,7 +128,7 @@ This project uses [Vitest](https://vitest.dev/) for unit testing. The tests are 
 
 ## Manual Trigger
 
-To manually trigger the worker, you can send a `GET` request to the `/__run-cron` endpoint. You will need to include the `Authorization` header with your `CRON_SECRET_TOKEN`.
+To manually trigger the worker, you can send a `GET` request to the `/--run-cron` endpoint. You will need to include the `Authorization` header with your `CRON_SECRET_TOKEN`.
 
 ```bash
 curl -X GET https://your-worker-url.workers.dev/--run-cron \
