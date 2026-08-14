@@ -1,4 +1,9 @@
-import { TodoistApi, Task } from '@doist/todoist-sdk';
+import {
+  TodoistApi,
+  type Task,
+  type GetCompletedTasksByCompletionDateArgs,
+} from '@doist/todoist-sdk';
+import { customFetch } from './adapters/http';
 
 function timingSafeEqual(a: string, b: string): boolean {
   // While this leaks length information, it's a common practice and still
@@ -62,7 +67,9 @@ export default {
     console.log('Cron job started: Reopening tracked/routine Todoist tasks.');
 
     try {
-      const api = new TodoistApi(env.TODOIST_API_TOKEN);
+      const api = new TodoistApi(env.TODOIST_API_TOKEN, {
+        customFetch,
+      });
 
       const allTasksToReopen: Task[] = [];
       let cursor: string | null = null;
@@ -84,7 +91,7 @@ export default {
           until: until.toISOString(),
           limit: 50, // Use the default limit
           cursor: cursor,
-        });
+        } satisfies GetCompletedTasksByCompletionDateArgs);
 
         allTasksToReopen.push(...response.items);
         cursor = response.nextCursor;
