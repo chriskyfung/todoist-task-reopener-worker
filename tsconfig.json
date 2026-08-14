@@ -12,8 +12,8 @@
     "skipLibCheck": true,
     "rootDir": "./src",
     "outDir": "dist",
-    "types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers"]
+    "types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers/types"]
   },
-  "include": ["src"],
+  "include": ["src", "worker-configuration.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

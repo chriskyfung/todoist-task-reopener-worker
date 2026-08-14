@@ -1,5 +1,5 @@
 import { SELF, env } from 'cloudflare:test';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { TodoistApi } from '@doist/todoist-sdk';
 
 // Mock the Todoist API
@@ -39,7 +39,7 @@ describe('Todoist Reopener Worker', () => {
 
     it('should execute scheduled job with valid token', async () => {
       (
-        TodoistApi.prototype.getCompletedTasksByCompletionDate as vi.Mock
+        TodoistApi.prototype.getCompletedTasksByCompletionDate as Mock
       ).mockResolvedValueOnce({
         items: [],
         nextCursor: null,
@@ -61,13 +61,13 @@ describe('Todoist Reopener Worker', () => {
       ];
 
       (
-        TodoistApi.prototype.getCompletedTasksByCompletionDate as vi.Mock
+        TodoistApi.prototype.getCompletedTasksByCompletionDate as Mock
       ).mockResolvedValueOnce({
         items: mockTasks,
         nextCursor: null,
       });
 
-      await SELF.scheduled();
+      await (SELF as unknown as { scheduled(): Promise<void> }).scheduled();
 
       expect(
         TodoistApi.prototype.getCompletedTasksByCompletionDate,
@@ -78,7 +78,7 @@ describe('Todoist Reopener Worker', () => {
     });
 
     it('should handle pagination correctly', async () => {
-      (TodoistApi.prototype.getCompletedTasksByCompletionDate as vi.Mock)
+      (TodoistApi.prototype.getCompletedTasksByCompletionDate as Mock)
         .mockResolvedValueOnce({
           items: [{ id: '1', content: 'Task 1' }],
           nextCursor: 'cursor-123',
@@ -88,12 +88,41 @@ describe('Todoist Reopener Worker', () => {
           nextCursor: null,
         });
 
-      await SELF.scheduled();
+      await (SELF as unknown as { scheduled(): Promise<void> }).scheduled();
 
       expect(
         TodoistApi.prototype.getCompletedTasksByCompletionDate,
       ).toHaveBeenCalledTimes(2);
       expect(TodoistApi.prototype.reopenTask).toHaveBeenCalledTimes(2);
+    });
+
+    it('should handle empty completed tasks list', async () => {
+      (
+        TodoistApi.prototype.getCompletedTasksByCompletionDate as Mock
+      ).mockResolvedValueOnce({
+        items: [],
+        nextCursor: null,
+      });
+
+      await (SELF as unknown as { scheduled(): Promise<void> }).scheduled();
+
+      expect(
+        TodoistApi.prototype.getCompletedTasksByCompletionDate,
+      ).toHaveBeenCalledTimes(1);
+      expect(TodoistApi.prototype.reopenTask).toHaveBeenCalledTimes(0);
+    });
+
+    it('should not crash when API throws an error', async () => {
+      (
+        TodoistApi.prototype.getCompletedTasksByCompletionDate as Mock
+      ).mockRejectedValueOnce(new Error('API request failed'));
+
+      await (SELF as unknown as { scheduled(): Promise<void> }).scheduled();
+
+      expect(
+        TodoistApi.prototype.getCompletedTasksByCompletionDate,
+      ).toHaveBeenCalledTimes(1);
+      // The scheduled handler catches errors, so it should not throw
     });
   });
 });
