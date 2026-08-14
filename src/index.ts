@@ -1,4 +1,8 @@
-import { TodoistApi, Task } from '@doist/todoist-sdk';
+import {
+  TodoistApi,
+  type Task,
+  type GetCompletedTasksByCompletionDateArgs,
+} from '@doist/todoist-sdk';
 
 function timingSafeEqual(a: string, b: string): boolean {
   // While this leaks length information, it's a common practice and still
@@ -84,7 +88,7 @@ export default {
           until: until.toISOString(),
           limit: 50, // Use the default limit
           cursor: cursor,
-        });
+        } satisfies GetCompletedTasksByCompletionDateArgs);
 
         allTasksToReopen.push(...response.items);
         cursor = response.nextCursor;
