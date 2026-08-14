@@ -6,7 +6,8 @@ import {
 } from '@doist/todoist-sdk';
 
 const customFetch: CustomFetch = async (url, options) => {
-  const { timeout: _ignored, ...init } = options ?? {};
+  const init = { ...options };
+  delete init.timeout;
   const response = await fetch(url, init);
   const headers: Record<string, string> = {};
   response.headers.forEach((value, key) => {
