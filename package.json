@@ -35,8 +35,8 @@
     "node": ">=24.18.0"
   },
   "devDependencies": {
-    "@cloudflare/vitest-plugin": "^1.5.1",
-    "@cloudflare/workers-types": "^5.20261104.1",
+    "@cloudflare/vitest-plugin": "^1.6.0",
+    "@cloudflare/workers-types": "^5.20261106.1",
     "@eslint/js": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.72.1",
